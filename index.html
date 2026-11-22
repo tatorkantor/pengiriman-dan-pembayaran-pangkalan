@@ -1218,7 +1218,7 @@
         <div class="wrapper-body">
             <div id="calc-fields-lockable">
                 <div class="detail-banner">
-                    <div class="detail-text" id="active-denom-label">0 x 100.000 = 0</div>
+                    <div class="detail-text" id="active-denom-label">0</div>
                 </div>
 
                 <div class="calc-card" id="denom-list"></div>
@@ -1936,14 +1936,8 @@
 
     function updateDetailBanner() {
         const total = getGrandTotalValue();
-        if (total <= 0) {
-            const item = denominations[selectedIndex];
-            document.getElementById("active-denom-label").textContent =
-                `0 x ${item.label} = 0`;
-        } else {
-            document.getElementById("active-denom-label").textContent =
-                formatRupiah(total);
-        }
+        document.getElementById("active-denom-label").textContent =
+            total <= 0 ? "0" : formatRupiah(total);
     }
 
     function handleRowClick(index) {
