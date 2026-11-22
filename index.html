@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPG 3 KG - Informasi Pengiriman dan Pembayaran</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --bg-canvas: #f6f4ef;
+            --bg-surface: #ffffff;
+            --bg-subtle: #efece4;
+            --bg-accent-soft: #eef3ef;
+            --bg-gold-soft: #f9f4e8;
+            --ink-primary: #1f2421;
+            --ink-secondary: #5c635e;
+            --ink-muted: #8c918d;
+            --accent-primary: #243b2e;
+            --accent-primary-hover: #1b2e23;
+            --accent-gold: #a68546;
+            --accent-gold-border: #e3d3ae;
+            --accent-success: #237a4b;
+            --accent-danger: #a8382b;
+            --accent-wa: #269952;
+            --border-hairline: #e4dfd5;
+            --border-strong: #cfc8ba;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--ink-primary);
+            display: flex;
+            justify-content: center;
+            padding: 20px 14px 205px 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        /* Header Mewah & Minimalis */
+        header {
+            text-align: center;
+            margin-bottom: 18px;
+            padding-top: 4px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--ink-primary);
+        }
+
+        header p {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .header-date {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-top: 8px;
+            letter-spacing: 0.2px;
+        }
+
+        /* Banner Penting Soft Gold */
+        .important-notice {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            background-color: var(--bg-gold-soft);
+            border: 1px solid var(--accent-gold-border);
+            border-radius: 14px;
+            padding: 11px 14px;
+            margin-top: 12px;
+            text-align: left;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #4a3c1d;
+        }
+
+        .important-notice.hidden-notice {
+            display: none;
+        }
+
+        .important-notice-text {
+            flex: 1;
+        }
+
+        .important-notice-text strong {
+            color: #7a5d22;
+            font-weight: 700;
+        }
+
+        .btn-close-notice {
+            background: rgba(166, 133, 70, 0.14);
+            border: none;
+            color: #6b5220;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Popup Notifikasi Soft Flat */
+        .popup-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(31, 36, 33, 0.36);
+            z-index: 400;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .popup-backdrop.show {
+            display: flex;
+        }
+
+        .popup-box {
+            background: var(--bg-surface);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 356px;
+            padding: 22px 20px;
+            border: 1px solid var(--border-hairline);
+            text-align: center;
+        }
+
+        .popup-title {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 8px;
+        }
+
+        .popup-title.alert {
+            color: var(--accent-danger);
+        }
+
+        .popup-message {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        .btn-popup-ok {
+            background: var(--accent-primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 28px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+        }
+
+        /* Kartu Pembungkus Soft Flat */
+        .wrapper-card {
+            background-color: var(--bg-subtle);
+            border: 1px solid var(--border-hairline);
+            border-radius: 20px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .wrapper-header {
+            padding: 15px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            background-color: var(--bg-surface);
+        }
+
+        .wrapper-card.open .wrapper-header {
+            border-bottom: 1px solid var(--border-hairline);
+        }
+
+        .wrapper-title {
+            font-size: 14.5px;
+            font-weight: 700;
+            letter-spacing: -0.1px;
+            color: var(--ink-primary);
+            line-height: 1.3;
+        }
+
+        .eye-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            background: var(--bg-accent-soft);
+            border: 1px solid #dce6de;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .eye-toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .wrapper-body {
+            display: none;
+            padding: 12px;
+        }
+
+        .wrapper-card.open .wrapper-body {
+            display: block;
+        }
+
+        /* Keadaan Redup & Terkunci saat Tersimpan */
+        .locked-section {
+            opacity: 0.56;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Tombol Simpan, Edit & Hapus */
+        .card-actions-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-card-save,
+        .btn-card-edit,
+        .btn-card-delete {
+            border-radius: 12px;
+            padding: 8.5px 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-card-save {
+            background: var(--accent-primary);
+            color: #ffffff;
+            border: 1px solid var(--accent-primary);
+        }
+
+        .btn-card-save:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        .btn-card-edit {
+            background: var(--bg-surface);
+            color: var(--ink-primary);
+            border: 1px solid var(--border-strong);
+        }
+
+        .btn-card-edit:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        .btn-card-delete {
+            background: var(--bg-surface);
+            color: var(--accent-danger);
+            border: 1px solid #e3b8b3;
+        }
+
+        /* Form Informasi Pengiriman */
+        .info-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-hairline);
+            border-radius: 16px;
+            padding: 15px 14px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 106px 10px 1fr;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+        }
+
+        .form-colon {
+            text-align: center;
+            color: var(--ink-muted);
+            font-weight: 700;
+        }
+
+        .input-box-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 12px;
+            padding: 0 36px 0 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink-primary);
+            background-color: #faf9f6;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        .form-input.no-clear {
+            padding-right: 12px;
+        }
+
+        .form-input:focus {
+            background-color: var(--bg-surface);
+            border-color: var(--accent-gold);
+        }
+
+        .form-input.locked-input {
+            background-color: var(--bg-accent-soft);
+            border-color: #dce6de;
+            color: var(--accent-primary);
+            font-weight: 700;
+            cursor: not-allowed;
+        }
+
+        .btn-clear-inside {
+            display: none;
+            position: absolute;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-subtle);
+            color: var(--ink-secondary);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-clear-inside.visible {
+            display: flex;
+        }
+
+        /* Input Tanggal */
+        .date-display-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .date-native-picker {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .date-formatted-view {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 12px;
+            padding: 0 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink-primary);
+            background-color: #faf9f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .date-formatted-view.placeholder {
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+            padding-left: 120px;
+        }
+
+        .chip-container.hidden-chips {
+            display: none;
+        }
+
+        .chip-btn {
+            border: 1px solid var(--border-hairline);
+            background-color: #faf9f6;
+            color: var(--ink-primary);
+            border-radius: 999px;
+            padding: 5px 11px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .chip-btn:hover {
+            background-color: var(--bg-accent-soft);
+            border-color: #c8d6cb;
+            color: var(--accent-primary);
+        }
+
+        /* Kartu Display Rincian Utama */
+        .detail-banner {
+            position: sticky;
+            top: 10px;
+            z-index: 50;
+            background: var(--accent-primary);
+            color: #ffffff;
+            border: 1px solid #355241;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .detail-text {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+        }
+
+        /* Daftar Pecahan */
+        .calc-card {
+            background-color: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-hairline);
+            overflow: hidden;
+        }
+
+        .calc-row {
+            padding: 12px 13px;
+            border-bottom: 1px solid #f0ede6;
+            cursor: pointer;
+        }
+
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+
+        .calc-row.selected {
+            background-color: var(--bg-accent-soft);
+        }
+
+        .row-main {
+            display: grid;
+            grid-template-columns: 1.05fr 1.25fr 1.1fr;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .denom-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .denom-rp {
+            font-size: 11px;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .denom-val {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: var(--ink-primary);
+            letter-spacing: -0.2px;
+        }
+
+        .step-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-surface);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            width: 44px;
+            height: 30px;
+            border: 1px solid var(--border-hairline);
+            border-radius: 9px;
+            text-align: center;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            background: #faf9f6;
+        }
+
+        .subtotal-col {
+            text-align: right;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .subtotal-col.zero {
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        /* Panel Tombol +1 s.d. +30 */
+        .row-quick-drawer {
+            display: none;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #d6dfd8;
+        }
+
+        .calc-row.open .row-quick-drawer {
+            display: grid;
+        }
+
+        .btn-quick {
+            padding: 8px 0;
+            border-radius: 9px;
+            border: 1px solid #d2ded5;
+            background: var(--bg-surface);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            cursor: pointer;
+        }
+
+        /* Kartu Informasi Pembayaran (Rincian Pecahan) */
+        .breakdown-card {
+            background-color: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-hairline);
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .breakdown-header {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            user-select: none;
+        }
+
+        .breakdown-arrow {
+            font-size: 11px;
+            color: var(--ink-secondary);
+        }
+
+        .breakdown-body {
+            display: none;
+            border-top: 1px solid #f0ede6;
+            padding: 6px 15px 10px;
+        }
+
+        .breakdown-card.open .breakdown-body {
+            display: block;
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .excel-table td {
+            padding: 6px 2px;
+            font-size: 13px;
+            color: var(--ink-primary);
+            border-bottom: 1px solid #f5f2ec;
+        }
+
+        .excel-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .excel-no { width: 24px; color: var(--ink-muted); font-weight: 600; }
+        .excel-nominal { text-align: right; font-weight: 600; width: 68px; }
+        .excel-sign { text-align: center; width: 22px; color: var(--ink-muted); }
+        .excel-qty { text-align: left; font-weight: 600; width: 34px; }
+        .excel-eq { text-align: center; width: 18px; color: var(--ink-muted); }
+        .excel-sub { text-align: right; font-weight: 700; color: var(--ink-primary); }
+        .empty-note { font-size: 12.5px; color: var(--ink-muted); padding: 8px 0; text-align: center; }
+
+        /* Kartu Bukti Foto Pembayaran */
+        .photo-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-hairline);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .photo-choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .photo-choice-grid.locked-choice {
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        .btn-photo-choice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-strong);
+            background-color: #faf9f6;
+            color: var(--ink-primary);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-photo-choice:hover:not(:disabled) {
+            background-color: var(--bg-accent-soft);
+            border-color: #c8d6cb;
+            color: var(--accent-primary);
+        }
+
+        .btn-photo-choice:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        .photo-preview-box {
+            margin-top: 12px;
+            background-color: #f2efe8;
+            border: 1px solid var(--border-hairline);
+            border-radius: 14px;
+            padding: 10px;
+            display: none;
+        }
+
+        .photo-preview-box.has-photo {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Bingkai Foto Putih Tipis Berukuran Sedang + Nama Bukti Foto di Tengah Bawah */
+        .photo-white-frame {
+            background-color: #ffffff;
+            border: 1.5px solid #e2ddd3;
+            border-radius: 8px;
+            padding: 6px 6px 8px 6px;
+            max-width: 250px;
+            width: 100%;
+        }
+
+        .photo-white-frame img {
+            display: block;
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .photo-frame-caption {
+            margin-top: 6px;
+            text-align: center;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .photo-empty-placeholder {
+            margin-top: 12px;
+            padding: 20px 12px;
+            border: 1px dashed var(--border-strong);
+            border-radius: 14px;
+            background-color: #faf9f6;
+            text-align: center;
+            font-size: 12px;
+            color: var(--ink-muted);
+        }
+
+        .photo-empty-placeholder.hidden-box {
+            display: none;
+        }
+
+        /* Dock Bawah Soft Flat */
+        .bottom-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(246, 244, 239, 0.96);
+            border-top: 1px solid var(--border-hairline);
+            padding: 10px 14px 14px;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .dock-inner {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .summary-card {
+            background-color: var(--bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-hairline);
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-line .label-row {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+        }
+
+        .summary-line .val-row {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--ink-primary);
+        }
+
+        .summary-line .val-row.positive {
+            color: var(--accent-success);
+        }
+
+        .summary-line .val-row.negative {
+            color: var(--accent-danger);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            padding: 11.5px 10px;
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-jpg {
+            background-color: var(--accent-primary);
+            color: #ffffff;
+            flex: 1.2;
+        }
+
+        .btn-wa {
+            background-color: var(--accent-wa);
+            color: #ffffff;
+            flex: 1.4;
+        }
+
+        .btn-reset {
+            background-color: var(--bg-surface);
+            color: var(--accent-danger);
+            border: 1px solid #e3b8b3;
+            flex: 0.85;
+        }
+
+        /* Template Struk JPG Tersembunyi (Gaya Soft Luxury Flat) */
+        .receipt-render-sandbox {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            width: 480px;
+            background-color: #f6f4ef;
+            padding: 18px;
+            z-index: -1;
+        }
+
+        .receipt-outer-frame {
+            border: 1.5px solid #c9c0ae;
+            border-radius: 18px;
+            background-color: #ffffff;
+            padding: 22px 18px 18px 18px;
+            color: #1f2421;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .receipt-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: #1f2421;
+        }
+
+        .receipt-header .receipt-subtitle {
+            font-size: 13.5px;
+            color: #5c635e;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .receipt-header .receipt-date {
+            font-size: 13px;
+            font-weight: 700;
+            color: #243b2e;
+            margin-top: 4px;
+        }
+
+        .receipt-box {
+            border: 1px solid #e4dfd5;
+            border-radius: 14px;
+            background-color: #faf9f6;
+            padding: 13px 14px;
+            margin-bottom: 12px;
+        }
+
+        .receipt-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .receipt-box-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #243b2e;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e4dfd5;
+        }
+
+        .receipt-info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .receipt-info-table td {
+            padding: 4px 0;
+            font-size: 13.5px;
+            vertical-align: top;
+            color: #1f2421;
+        }
+
+        .receipt-info-table td.r-label {
+            width: 130px;
+            color: #5c635e;
+            font-weight: 600;
+        }
+
+        .receipt-info-table td.r-colon {
+            width: 16px;
+            text-align: center;
+            color: #8c918d;
+        }
+
+        .receipt-info-table td.r-val {
+            font-weight: 600;
+        }
+
+        .receipt-info-table td.r-val.bold {
+            font-weight: 800;
+            color: #243b2e;
+        }
+
+        .receipt-pay-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #dcd6ca;
+            font-size: 13.5px;
+        }
+
+        .receipt-pay-item:first-of-type {
+            padding-top: 2px;
+        }
+
+        .receipt-pay-item:last-of-type {
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+        .receipt-pay-left {
+            font-weight: 700;
+            color: #1f2421;
+        }
+
+        .receipt-pay-right {
+            font-weight: 700;
+            color: #1f2421;
+        }
+
+        .receipt-summary-box {
+            border: 1px solid #d8d0c0;
+            border-radius: 14px;
+            background-color: #f9f4e8;
+            padding: 13px 14px;
+        }
+
+        .receipt-sum-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #1f2421;
+        }
+
+        .receipt-sum-row.positive span:last-child {
+            color: #237a4b;
+        }
+
+        .receipt-thank-you {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            color: #8b6d32;
+            margin-top: 14px;
+            margin-bottom: 0;
+        }
+
+        /* Kartu Bukti Foto Pembayaran di dalam Bingkai Utama di bawah Terima Kasih */
+        .receipt-photo-section {
+            margin-top: 14px;
+            border: 1px solid #e4dfd5;
+            border-radius: 14px;
+            background-color: #faf9f6;
+            padding: 13px 14px;
+        }
+
+        .receipt-photo-inner-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        .receipt-photo-frame {
+            background-color: #ffffff;
+            border: 1.5px solid #e2ddd3;
+            border-radius: 8px;
+            padding: 6px 6px 8px 6px;
+            max-width: 260px;
+            width: 100%;
+        }
+
+        .receipt-photo-frame img {
+            display: block;
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .receipt-photo-caption {
+            margin-top: 7px;
+            text-align: center;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #1f2421;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body id="body-wrapper">
+
+<!-- Popup Notifikasi -->
+<div class="popup-backdrop" id="popup-backdrop">
+    <div class="popup-box">
+        <div class="popup-title" id="popup-title">Informasi</div>
+        <div class="popup-message" id="popup-message">Pesan notifikasi</div>
+        <button type="button" class="btn-popup-ok" onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<!-- Sandbox Render JPG Gaya Soft Luxury Flat -->
+<div class="receipt-render-sandbox" id="receipt-sandbox"></div>
+
+<div class="app-container" id="capture-area">
+    <header>
+        <h1>LPG 3 KG</h1>
+        <p>Informasi Pengiriman dan Pembayaran</p>
+        <div class="header-date" id="header-current-date"></div>
+
+        <div class="important-notice" id="important-notice">
+            <div class="important-notice-text">
+                <strong>Penting :</strong> Selalu reset sebelum menggunakan aplikasi ini, agar aplikasi berjalan normal.
+            </div>
+            <button type="button" class="btn-close-notice" onclick="closeNotice()" title="Tutup">×</button>
+        </div>
+    </header>
+
+    <!-- Kartu Pembungkus 1: Informasi Pengiriman -->
+    <div class="wrapper-card" id="delivery-info-wrapper">
+        <div class="wrapper-header" onclick="toggleCard('delivery-info-wrapper', 'info')">
+            <span class="wrapper-title">Informasi Pengiriman</span>
+            <div class="eye-toggle-btn">
+                <svg id="icon-eye-open-info" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="icon-eye-closed-info" viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wrapper-body">
+            <div id="delivery-fields-lockable">
+                <div class="info-card">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="tanggal-picker">Tanggal kirim</label>
+                            <span class="form-colon">:</span>
+                            <div class="date-display-wrap">
+                                <div class="date-formatted-view placeholder" id="tanggal-view">
+                                    <span id="tanggal-text">Pilih tanggal kirim</span>
+                                    <span style="font-size:12px;color:#8c918d;">📅</span>
+                                </div>
+                                <input type="date" id="tanggal-picker" class="date-native-picker" onchange="handleDateChange(this.value)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="pangkalan-input">Pangkalan</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="text" id="pangkalan-input" class="form-input" placeholder="Masukkan nama pangkalan" oninput="handlePangkalanInput()">
+                                <button type="button" class="btn-clear-inside" id="clear-pangkalan" onclick="clearPangkalan()" title="Batalkan">×</button>
+                            </div>
+                        </div>
+                        <div class="chip-container" id="pangkalan-chips"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="jumlah-tabung-input">Jumlah tabung</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="number" id="jumlah-tabung-input" class="form-input no-clear" placeholder="0" min="0" oninput="calculateBayar()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="harga-satuan-input">Harga satuan</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="text" id="harga-satuan-input" class="form-input" placeholder="0" inputmode="numeric" oninput="handleHargaInput(this.value)">
+                                <button type="button" class="btn-clear-inside" id="clear-harga" onclick="clearHarga()" title="Batalkan">×</button>
+                            </div>
+                        </div>
+                        <div class="chip-container" id="harga-chips">
+                            <button type="button" class="chip-btn" onclick="selectHarga('16.000')">16.000</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="jumlah-bayar-input">Jumlah bayar</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="text" id="jumlah-bayar-input" class="form-input no-clear locked-input" value="Rp 0" readonly tabindex="-1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="status-bayar-input">Status bayar</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="text" id="status-bayar-input" class="form-input" placeholder="Pilih atau isi status bayar" oninput="handleStatusInput()">
+                                <button type="button" class="btn-clear-inside" id="clear-status" onclick="clearStatus()" title="Batalkan">×</button>
+                            </div>
+                        </div>
+                        <div class="chip-container" id="status-chips">
+                            <button type="button" class="chip-btn" onclick="selectStatus('LUNAS')">LUNAS</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label class="form-label" for="catatan-input">Catatan</label>
+                            <span class="form-colon">:</span>
+                            <div class="input-box-wrap">
+                                <input type="text" id="catatan-input" class="form-input" placeholder="Pilih atau isi catatan" oninput="handleCatatanInput()">
+                                <button type="button" class="btn-clear-inside" id="clear-catatan" onclick="clearCatatan()" title="Batalkan">×</button>
+                            </div>
+                        </div>
+                        <div class="chip-container" id="catatan-chips">
+                            <button type="button" class="chip-btn" onclick="selectCatatan('TIDAK ADA')">TIDAK ADA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-actions-bar">
+                <button type="button" class="btn-card-save" id="btn-save-delivery" onclick="saveDeliveryCard()">Simpan</button>
+                <button type="button" class="btn-card-edit" id="btn-edit-delivery" onclick="editDeliveryCard()" disabled>Edit</button>
+                <button type="button" class="btn-card-delete" id="btn-delete-delivery" onclick="deleteDeliveryCard()">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kartu Pembungkus 2: Informasi Pembayaran dan Kalkulator Cepat -->
+    <div class="wrapper-card" id="quick-calc-wrapper">
+        <div class="wrapper-header" onclick="toggleCard('quick-calc-wrapper', 'calc')">
+            <span class="wrapper-title">Informasi Pembayaran dan Kalkulator Cepat</span>
+            <div class="eye-toggle-btn">
+                <svg id="icon-eye-open-calc" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="icon-eye-closed-calc" viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wrapper-body">
+            <div id="calc-fields-lockable">
+                <div class="detail-banner">
+                    <div class="detail-text" id="active-denom-label">0 x 100.000 = 0</div>
+                </div>
+
+                <div class="calc-card" id="denom-list"></div>
+            </div>
+
+            <div class="card-actions-bar">
+                <button type="button" class="btn-card-save" id="btn-save-calc" onclick="saveCalcCard()">Simpan</button>
+                <button type="button" class="btn-card-edit" id="btn-edit-calc" onclick="editCalcCard()" disabled>Edit</button>
+                <button type="button" class="btn-card-delete" id="btn-delete-calc" onclick="deleteCalcCard()">Hapus</button>
+            </div>
+
+            <div class="breakdown-card open" id="breakdown-card">
+                <div class="breakdown-header" onclick="toggleBreakdown()">
+                    <span>Informasi pembayaran</span>
+                    <span class="breakdown-arrow">▼</span>
+                </div>
+                <div class="breakdown-body" id="breakdown-body">
+                    <div class="empty-note">Belum ada nominal yang dipilih</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kartu Pembungkus 3: Bukti Foto Pembayaran -->
+    <div class="wrapper-card" id="photo-proof-wrapper">
+        <div class="wrapper-header" onclick="toggleCard('photo-proof-wrapper', 'photo')">
+            <span class="wrapper-title">Bukti Foto Pembayaran</span>
+            <div class="eye-toggle-btn">
+                <svg id="icon-eye-open-photo" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg id="icon-eye-closed-photo" viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div class="wrapper-body">
+            <div id="photo-fields-lockable">
+                <div class="photo-card">
+                    <div class="photo-choice-grid" id="photo-choice-grid">
+                        <button type="button" class="btn-photo-choice" id="btn-photo-camera" onclick="triggerPhotoInput('camera')" disabled>
+                            <span>📷</span>
+                            <span>Foto Kamera</span>
+                        </button>
+                        <button type="button" class="btn-photo-choice" id="btn-photo-gallery" onclick="triggerPhotoInput('gallery')" disabled>
+                            <span>🖼️</span>
+                            <span>Unggah Foto</span>
+                        </button>
+                    </div>
+
+                    <input type="file" id="photo-camera-input" accept="image/*" capture="environment" style="display:none;" onchange="handlePhotoFileChange(this.files[0])">
+                    <input type="file" id="photo-gallery-input" accept="image/*" style="display:none;" onchange="handlePhotoFileChange(this.files[0])">
+
+                    <div class="photo-empty-placeholder" id="photo-empty-placeholder">
+                        Simpan 2 kartu di atas terlebih dahulu, lalu pilih Foto Kamera atau Unggah Foto
+                    </div>
+
+                    <div class="photo-preview-box" id="photo-preview-box">
+                        <div class="photo-white-frame">
+                            <img id="photo-preview-img" src="" alt="Pratinjau Bukti Foto">
+                            <div class="photo-frame-caption" id="photo-preview-caption"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-actions-bar">
+                <button type="button" class="btn-card-save" id="btn-save-photo" onclick="savePhotoCard()">Simpan</button>
+                <button type="button" class="btn-card-edit" id="btn-edit-photo" onclick="editPhotoCard()" disabled>Edit</button>
+                <button type="button" class="btn-card-delete" id="btn-delete-photo" onclick="deletePhotoCard()">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ringkasan & Tombol Aksi -->
+    <div class="bottom-dock">
+        <div class="dock-inner">
+            <div class="summary-card">
+                <div class="summary-line">
+                    <span class="label-row">Uang diterima</span>
+                    <span class="val-row" id="grand-total">Rp 0</span>
+                </div>
+                <div class="summary-line">
+                    <span class="label-row">Jumlah bayar</span>
+                    <span class="val-row" id="summary-jumlah-bayar">Rp 0</span>
+                </div>
+                <div class="summary-line">
+                    <span class="label-row">Total kembalian</span>
+                    <span class="val-row" id="summary-kembalian">Rp 0</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="btn-action btn-jpg" onclick="handleExportAction('jpg')">Jadikan JPG</button>
+                <button type="button" class="btn-action btn-wa" onclick="handleExportAction('wa')">Kirim Whatsapp</button>
+                <button type="button" class="btn-action btn-reset" onclick="resetCalc()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const denominations = [
+        { value: 100000, label: "100.000", count: 0 },
+        { value: 50000,  label: "50.000",  count: 0 },
+        { value: 20000,  label: "20.000",  count: 0 },
+        { value: 10000,  label: "10.000",  count: 0 },
+        { value: 5000,   label: "5.000",   count: 0 },
+        { value: 2000,   label: "2.000",   count: 0 },
+        { value: 1000,   label: "1.000",   count: 0 },
+        { value: 500,    label: "500",     count: 0 }
+    ];
+
+    const pangkalanList = ["ADDY", "NURHAYATI", "TOKO MIFTA TIRTA", "UD WAHYU", "URIP"];
+    const hariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    const bulanIndo = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    const quickSteps = Array.from({ length: 30 }, (_, i) => i + 1);
+    let selectedIndex = 0;
+    let openDrawerIndex = null;
+
+    let isDeliverySaved = false;
+    let isCalcSaved = false;
+    let isPhotoSaved = false;
+
+    // State Bukti Foto Pembayaran
+    let rawPhotoDataUrl = "";
+    let watermarkedPhotoDataUrl = "";
+    let currentPhotoFileName = "";
+
+    function formatAngka(angka) {
+        return angka.toLocaleString("id-ID");
+    }
+
+    function formatRupiah(angka) {
+        return "Rp " + formatAngka(angka);
+    }
+
+    function parseAngka(str) {
+        const clean = String(str || "").replace(/[^0-9]/g, "");
+        return clean ? parseInt(clean, 10) : 0;
+    }
+
+    function getHeaderDateIndo() {
+        const now = new Date();
+        const tgl = now.getDate();
+        const bln = bulanIndo[now.getMonth()];
+        const thn = now.getFullYear();
+        return `${tgl} ${bln} ${thn}`;
+    }
+
+    function setHeaderDate() {
+        document.getElementById("header-current-date").textContent = getHeaderDateIndo();
+    }
+
+    function getFullDayDateIndo() {
+        const now = new Date();
+        const hari = hariIndo[now.getDay()];
+        const tgl = now.getDate();
+        const bln = bulanIndo[now.getMonth()];
+        const thn = now.getFullYear();
+        return `${hari}, ${tgl} ${bln} ${thn}`;
+    }
+
+    function isDeliveryFormComplete() {
+        const tglRaw = document.getElementById("tanggal-picker").value.trim();
+        const pangkalan = document.getElementById("pangkalan-input").value.trim();
+        const tabung = parseAngka(document.getElementById("jumlah-tabung-input").value);
+        const harga = parseAngka(document.getElementById("harga-satuan-input").value);
+        const statusBayar = document.getElementById("status-bayar-input").value.trim();
+        const catatan = document.getElementById("catatan-input").value.trim();
+        return Boolean(tglRaw && pangkalan && tabung > 0 && harga > 0 && statusBayar && catatan);
+    }
+
+    function sanitizeFilePart(str) {
+        return String(str || "")
+            .trim()
+            .replace(/[^a-zA-Z0-9\s-]/g, "")
+            .replace(/\s+/g, "-");
+    }
+
+    function buildPhotoFileName() {
+        const pangkalan = document.getElementById("pangkalan-input").value.trim();
+        const tglKirim = document.getElementById("tanggal-text").textContent.trim();
+        const tglBayar = getHeaderDateIndo();
+
+        const cleanPangkalan = sanitizeFilePart(pangkalan);
+        const cleanKirim = sanitizeFilePart(tglKirim);
+        const cleanBayar = sanitizeFilePart(tglBayar);
+
+        return `Bukti-Foto_${cleanPangkalan}_Kirim-${cleanKirim}_Bayar-${cleanBayar}.jpg`;
+    }
+
+    function showNotice() {
+        document.getElementById("important-notice").classList.remove("hidden-notice");
+    }
+
+    function closeNotice() {
+        document.getElementById("important-notice").classList.add("hidden-notice");
+    }
+
+    function showPopup(judul, pesan, isAlert = false) {
+        const titleEl = document.getElementById("popup-title");
+        titleEl.textContent = judul;
+        titleEl.className = isAlert ? "popup-title alert" : "popup-title";
+        document.getElementById("popup-message").textContent = pesan;
+        document.getElementById("popup-backdrop").classList.add("show");
+    }
+
+    function closePopup() {
+        document.getElementById("popup-backdrop").classList.remove("show");
+    }
+
+    function setCardOpenState(wrapperId, suffix, isOpen) {
+        const wrapper = document.getElementById(wrapperId);
+        wrapper.classList.toggle("open", isOpen);
+        document.getElementById(`icon-eye-open-${suffix}`).style.display = isOpen ? "block" : "none";
+        document.getElementById(`icon-eye-closed-${suffix}`).style.display = isOpen ? "none" : "block";
+    }
+
+    function toggleCard(wrapperId, suffix) {
+        const wrapper = document.getElementById(wrapperId);
+        const willOpen = !wrapper.classList.contains("open");
+        setCardOpenState(wrapperId, suffix, willOpen);
+    }
+
+    function applyLockState() {
+        const deliveryLock = document.getElementById("delivery-fields-lockable");
+        const saveDeliveryBtn = document.getElementById("btn-save-delivery");
+        const editDeliveryBtn = document.getElementById("btn-edit-delivery");
+        deliveryLock.classList.toggle("locked-section", isDeliverySaved);
+        saveDeliveryBtn.disabled = isDeliverySaved;
+        editDeliveryBtn.disabled = !isDeliverySaved;
+
+        const calcLock = document.getElementById("calc-fields-lockable");
+        const saveCalcBtn = document.getElementById("btn-save-calc");
+        const editCalcBtn = document.getElementById("btn-edit-calc");
+        calcLock.classList.toggle("locked-section", isCalcSaved);
+        saveCalcBtn.disabled = isCalcSaved;
+        editCalcBtn.disabled = !isCalcSaved;
+
+        const canUsePhotoSource = isDeliverySaved && isCalcSaved && !isPhotoSaved;
+        document.getElementById("btn-photo-camera").disabled = !canUsePhotoSource;
+        document.getElementById("btn-photo-gallery").disabled = !canUsePhotoSource;
+        document.getElementById("photo-choice-grid").classList.toggle("locked-choice", isPhotoSaved);
+
+        const emptyBox = document.getElementById("photo-empty-placeholder");
+        if (!rawPhotoDataUrl && !watermarkedPhotoDataUrl) {
+            emptyBox.textContent = (isDeliverySaved && isCalcSaved)
+                ? "Belum ada bukti foto dipilih — tekan Foto Kamera atau Unggah Foto"
+                : "Simpan 2 kartu di atas terlebih dahulu, lalu pilih Foto Kamera atau Unggah Foto";
+        }
+
+        const savePhotoBtn = document.getElementById("btn-save-photo");
+        const editPhotoBtn = document.getElementById("btn-edit-photo");
+        savePhotoBtn.disabled = isPhotoSaved;
+        editPhotoBtn.disabled = !isPhotoSaved;
+    }
+
+    function updateSummaryDock() {
+        const uangDiterima = getGrandTotalValue();
+        const jumlahBayar = getJumlahBayarValue();
+        const kembalian = uangDiterima - jumlahBayar;
+
+        document.getElementById("grand-total").textContent = formatRupiah(uangDiterima);
+        document.getElementById("summary-jumlah-bayar").textContent = formatRupiah(jumlahBayar);
+
+        const kembalianEl = document.getElementById("summary-kembalian");
+        kembalianEl.classList.remove("positive", "negative");
+
+        if (kembalian > 0) {
+            kembalianEl.textContent = formatRupiah(kembalian);
+            kembalianEl.classList.add("positive");
+        } else if (kembalian < 0) {
+            kembalianEl.textContent = "- " + formatRupiah(Math.abs(kembalian));
+            kembalianEl.classList.add("negative");
+        } else {
+            kembalianEl.textContent = formatRupiah(0);
+        }
+    }
+
+    // Tanggal kirim
+    function handleDateChange(isoDate) {
+        if (isDeliverySaved) return;
+        const viewEl = document.getElementById("tanggal-view");
+        const textEl = document.getElementById("tanggal-text");
+
+        if (!isoDate) {
+            textEl.textContent = "Pilih tanggal kirim";
+            viewEl.classList.add("placeholder");
+            return;
+        }
+
+        const parts = isoDate.split("-");
+        if (parts.length === 3) {
+            const tahun = parseInt(parts[0], 10);
+            const bulan = bulanIndo[parseInt(parts[1], 10) - 1] || "";
+            const tanggal = parseInt(parts[2], 10);
+            textEl.textContent = `${tanggal} ${bulan} ${tahun}`;
+            viewEl.classList.remove("placeholder");
+        }
+    }
+
+    function syncChipVisibility(inputId, chipContainerId, clearBtnId) {
+        const val = document.getElementById(inputId).value.trim();
+        const hasVal = val.length > 0;
+        document.getElementById(chipContainerId).classList.toggle("hidden-chips", hasVal);
+        document.getElementById(clearBtnId).classList.toggle("visible", hasVal);
+    }
+
+    // Pangkalan
+    function renderPangkalanChips() {
+        const container = document.getElementById("pangkalan-chips");
+        container.innerHTML = pangkalanList.map(name =>
+            `<button type="button" class="chip-btn" onclick="selectPangkalan('${name}')">${name}</button>`
+        ).join("");
+    }
+
+    function selectPangkalan(name) {
+        if (isDeliverySaved) return;
+        document.getElementById("pangkalan-input").value = name;
+        syncChipVisibility("pangkalan-input", "pangkalan-chips", "clear-pangkalan");
+    }
+
+    function handlePangkalanInput() {
+        if (isDeliverySaved) return;
+        syncChipVisibility("pangkalan-input", "pangkalan-chips", "clear-pangkalan");
+    }
+
+    function clearPangkalan() {
+        if (isDeliverySaved) return;
+        document.getElementById("pangkalan-input").value = "";
+        syncChipVisibility("pangkalan-input", "pangkalan-chips", "clear-pangkalan");
+    }
+
+    // Harga satuan
+    function selectHarga(labelStr) {
+        if (isDeliverySaved) return;
+        document.getElementById("harga-satuan-input").value = labelStr;
+        syncChipVisibility("harga-satuan-input", "harga-chips", "clear-harga");
+        calculateBayar();
+    }
+
+    function handleHargaInput(val) {
+        if (isDeliverySaved) return;
+        const num = parseAngka(val);
+        const input = document.getElementById("harga-satuan-input");
+        input.value = val.trim().length > 0 ? formatAngka(num) : "";
+        syncChipVisibility("harga-satuan-input", "harga-chips", "clear-harga");
+        calculateBayar();
+    }
+
+    function clearHarga() {
+        if (isDeliverySaved) return;
+        document.getElementById("harga-satuan-input").value = "";
+        syncChipVisibility("harga-satuan-input", "harga-chips", "clear-harga");
+        calculateBayar();
+    }
+
+    function getJumlahBayarValue() {
+        const tabung = parseAngka(document.getElementById("jumlah-tabung-input").value);
+        const harga = parseAngka(document.getElementById("harga-satuan-input").value);
+        return tabung * harga;
+    }
+
+    function calculateBayar() {
+        const bayar = getJumlahBayarValue();
+        document.getElementById("jumlah-bayar-input").value = formatRupiah(bayar);
+        updateSummaryDock();
+    }
+
+    // Status bayar
+    function selectStatus(statusStr) {
+        if (isDeliverySaved) return;
+        document.getElementById("status-bayar-input").value = statusStr;
+        syncChipVisibility("status-bayar-input", "status-chips", "clear-status");
+    }
+
+    function handleStatusInput() {
+        if (isDeliverySaved) return;
+        syncChipVisibility("status-bayar-input", "status-chips", "clear-status");
+    }
+
+    function clearStatus() {
+        if (isDeliverySaved) return;
+        document.getElementById("status-bayar-input").value = "";
+        syncChipVisibility("status-bayar-input", "status-chips", "clear-status");
+    }
+
+    // Catatan (wajib diisi)
+    function selectCatatan(catatanStr) {
+        if (isDeliverySaved) return;
+        document.getElementById("catatan-input").value = catatanStr;
+        syncChipVisibility("catatan-input", "catatan-chips", "clear-catatan");
+    }
+
+    function handleCatatanInput() {
+        if (isDeliverySaved) return;
+        syncChipVisibility("catatan-input", "catatan-chips", "clear-catatan");
+    }
+
+    function clearCatatan() {
+        if (isDeliverySaved) return;
+        document.getElementById("catatan-input").value = "";
+        syncChipVisibility("catatan-input", "catatan-chips", "clear-catatan");
+    }
+
+    // Simpan, Edit & Hapus Kartu Informasi Pengiriman
+    function saveDeliveryCard() {
+        if (isDeliverySaved) return;
+
+        if (!isDeliveryFormComplete()) {
+            showPopup(
+                "Data Belum Lengkap",
+                "Lengkapi semua kolom pada Informasi Pengiriman termasuk kolom Catatan sebelum menekan tombol Simpan.",
+                true
+            );
+            return;
+        }
+
+        const tglRaw = document.getElementById("tanggal-picker").value.trim();
+        const pangkalan = document.getElementById("pangkalan-input").value.trim();
+        const statusBayar = document.getElementById("status-bayar-input").value.trim();
+        const catatan = document.getElementById("catatan-input").value.trim();
+
+        const data = {
+            tanggal: tglRaw,
+            pangkalan,
+            tabung: document.getElementById("jumlah-tabung-input").value,
+            harga: document.getElementById("harga-satuan-input").value,
+            status: statusBayar,
+            catatan
+        };
+
+        localStorage.setItem("lpg3kg_delivery_info", JSON.stringify(data));
+        isDeliverySaved = true;
+        applyLockState();
+        setCardOpenState("delivery-info-wrapper", "info", false);
+        showPopup("Berhasil Tersimpan", "Data pada kartu Informasi Pengiriman telah tersimpan.");
+    }
+
+    function editDeliveryCard() {
+        if (!isDeliverySaved) return;
+        isDeliverySaved = false;
+        applyLockState();
+        showPopup("Mode Edit Aktif", "Kunci kartu Informasi Pengiriman telah dibuka. Silakan ubah data lalu tekan Simpan kembali.");
+    }
+
+    function deleteDeliveryCard() {
+        isDeliverySaved = false;
+        applyLockState();
+
+        document.getElementById("tanggal-picker").value = "";
+        handleDateChange("");
+        clearPangkalan();
+        document.getElementById("jumlah-tabung-input").value = "";
+        clearHarga();
+        clearStatus();
+        clearCatatan();
+        calculateBayar();
+
+        localStorage.removeItem("lpg3kg_delivery_info");
+        showPopup("Terhapus", "Data pada kartu Informasi Pengiriman telah dihapus dan kolom diaktifkan kembali.");
+    }
+
+    // Simpan, Edit & Hapus Kartu Informasi Pembayaran dan Kalkulator Cepat
+    function saveCalcCard() {
+        if (isCalcSaved) return;
+
+        const totalPembayaran = getGrandTotalValue();
+        const jumlahBayar = getJumlahBayarValue();
+
+        if (totalPembayaran <= 0) {
+            showPopup(
+                "Nominal Belum Diisi",
+                "Pilih minimal satu nominal pecahan pada kalkulator sebelum menekan tombol Simpan.",
+                true
+            );
+            return;
+        }
+
+        if (jumlahBayar > 0 && totalPembayaran < jumlahBayar) {
+            showPopup(
+                "Nominal Kurang",
+                `Uang diterima (${formatRupiah(totalPembayaran)}) masih di bawah Jumlah bayar (${formatRupiah(jumlahBayar)}). Samakan atau lebihkan nominal agar bisa disimpan.`,
+                true
+            );
+            return;
+        }
+
+        const counts = denominations.map(d => d.count);
+        localStorage.setItem("lpg3kg_calc_counts", JSON.stringify(counts));
+        isCalcSaved = true;
+        applyLockState();
+        setCardOpenState("quick-calc-wrapper", "calc", false);
+        showPopup("Berhasil Tersimpan", "Data pada kartu Informasi Pembayaran dan Kalkulator Cepat telah tersimpan.");
+    }
+
+    function editCalcCard() {
+        if (!isCalcSaved) return;
+        isCalcSaved = false;
+        applyLockState();
+        showPopup("Mode Edit Aktif", "Kunci kalkulator pembayaran telah dibuka. Silakan ubah pecahan lalu tekan Simpan kembali.");
+    }
+
+    function deleteCalcCard() {
+        isCalcSaved = false;
+        denominations.forEach(item => item.count = 0);
+        openDrawerIndex = null;
+        localStorage.removeItem("lpg3kg_calc_counts");
+        renderCalculator();
+        applyLockState();
+        showPopup("Terhapus", "Data pada kartu Informasi Pembayaran dan Kalkulator Cepat telah dihapus dan kolom diaktifkan kembali.");
+    }
+
+    // Helper gambar kotak membulat untuk watermark
+    function drawRoundedRect(ctx, x, y, w, h, r) {
+        const radius = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.arcTo(x + w, y, x + w, y + h, radius);
+        ctx.arcTo(x + w, y + h, x, y + h, radius);
+        ctx.arcTo(x, y + h, x, y, radius);
+        ctx.arcTo(x, y, x + w, y, radius);
+        ctx.closePath();
+    }
+
+    // Fitur Bukti Foto Pembayaran (Foto Kamera / Unggah Foto + Watermark Jelas & Terbaca + Bingkai Putih Sedang)
+    function triggerPhotoInput(mode) {
+        if (isPhotoSaved || !isDeliverySaved || !isCalcSaved) return;
+        if (mode === "camera") {
+            document.getElementById("photo-camera-input").value = "";
+            document.getElementById("photo-camera-input").click();
+        } else {
+            document.getElementById("photo-gallery-input").value = "";
+            document.getElementById("photo-gallery-input").click();
+        }
+    }
+
+    function handlePhotoFileChange(file) {
+        if (!file || isPhotoSaved || !isDeliverySaved || !isCalcSaved) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            rawPhotoDataUrl = e.target.result;
+            watermarkedPhotoDataUrl = "";
+            currentPhotoFileName = "";
+            updatePhotoPreviewUI(rawPhotoDataUrl, "Belum disimpan (watermark & nama bukti foto akan diterapkan saat Simpan)");
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function updatePhotoPreviewUI(imgSrc, captionText) {
+        const previewBox = document.getElementById("photo-preview-box");
+        const emptyBox = document.getElementById("photo-empty-placeholder");
+        const imgEl = document.getElementById("photo-preview-img");
+        const capEl = document.getElementById("photo-preview-caption");
+
+        if (imgSrc) {
+            imgEl.src = imgSrc;
+            capEl.textContent = captionText;
+            previewBox.classList.add("has-photo");
+            emptyBox.classList.add("hidden-box");
+        } else {
+            imgEl.src = "";
+            capEl.textContent = "";
+            previewBox.classList.remove("has-photo");
+            emptyBox.classList.remove("hidden-box");
+        }
+    }
+
+    function createWatermarkedPhotoDataUrl(sourceDataUrl, namaPangkalan, tglKirim, tglBayar) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                const maxDim = 1000;
+                let targetW = img.width;
+                let targetH = img.height;
+
+                if (targetW > maxDim || targetH > maxDim) {
+                    if (targetW >= targetH) {
+                        targetH = Math.round((targetH * maxDim) / targetW);
+                        targetW = maxDim;
+                    } else {
+                        targetW = Math.round((targetW * maxDim) / targetH);
+                        targetH = maxDim;
+                    }
+                }
+
+                const canvas = document.createElement("canvas");
+                canvas.width = targetW;
+                canvas.height = targetH;
+                const ctx = canvas.getContext("2d");
+
+                ctx.drawImage(img, 0, 0, targetW, targetH);
+
+                const lines = [
+                    `Pangkalan: ${namaPangkalan}`,
+                    `Tanggal Kirim: ${tglKirim}`,
+                    `Tanggal Bayar: ${tglBayar}`
+                ];
+
+                const fontSize = Math.max(15, Math.min(22, Math.round(targetW * 0.028)));
+                const lineGap = Math.round(fontSize * 0.45);
+                const padX = Math.round(fontSize * 0.8);
+                const padY = Math.round(fontSize * 0.65);
+
+                ctx.font = `700 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+
+                let maxTextW = 0;
+                lines.forEach(line => {
+                    const w = ctx.measureText(line).width;
+                    if (w > maxTextW) maxTextW = w;
+                });
+
+                const margin = Math.max(10, Math.round(targetW * 0.025));
+                const boxW = Math.min(targetW - margin * 2, Math.ceil(maxTextW + padX * 2));
+                const textBlockH = fontSize * lines.length + lineGap * (lines.length - 1);
+                const boxH = textBlockH + padY * 2;
+                const boxX = targetW - boxW - margin;
+                const boxY = targetH - boxH - margin;
+
+                drawRoundedRect(ctx, boxX, boxY, boxW, boxH, Math.round(fontSize * 0.55));
+                ctx.fillStyle = "rgba(18, 22, 19, 0.84)";
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "top";
+
+                lines.forEach((line, idx) => {
+                    const yPos = boxY + padY + idx * (fontSize + lineGap);
+                    ctx.fillText(line, boxX + padX, yPos);
+                });
+
+                resolve(canvas.toDataURL("image/jpeg", 0.9));
+            };
+            img.onerror = reject;
+            img.src = sourceDataUrl;
+        });
+    }
+
+    async function savePhotoCard() {
+        if (isPhotoSaved) return;
+
+        if (!isDeliverySaved || !isDeliveryFormComplete() || !isCalcSaved) {
+            showPopup(
+                "2 Kartu Belum Tersimpan",
+                "Simpan terlebih dahulu kartu Informasi Pengiriman dan Informasi Pembayaran sebelum menyimpan bukti foto.",
+                true
+            );
+            return;
+        }
+
+        if (!rawPhotoDataUrl) {
+            showPopup(
+                "Foto Belum Dipilih",
+                "Pilih Foto Kamera atau Unggah Foto terlebih dahulu sebelum menekan tombol Simpan.",
+                true
+            );
+            return;
+        }
+
+        const namaPangkalan = document.getElementById("pangkalan-input").value.trim();
+        const tglKirim = document.getElementById("tanggal-text").textContent.trim();
+        const tglBayar = getHeaderDateIndo();
+        currentPhotoFileName = buildPhotoFileName();
+
+        try {
+            watermarkedPhotoDataUrl = await createWatermarkedPhotoDataUrl(
+                rawPhotoDataUrl,
+                namaPangkalan,
+                tglKirim,
+                tglBayar
+            );
+            updatePhotoPreviewUI(watermarkedPhotoDataUrl, currentPhotoFileName);
+            isPhotoSaved = true;
+            applyLockState();
+            setCardOpenState("photo-proof-wrapper", "photo", false);
+            showPopup(
+                "Bukti Foto Tersimpan",
+                `Foto tersimpan dengan nama: ${currentPhotoFileName}`
+            );
+        } catch (err) {
+            showPopup("Gagal Memproses Foto", "Terjadi kendala saat memberi watermark pada foto.", true);
+        }
+    }
+
+    function editPhotoCard() {
+        if (!isPhotoSaved) return;
+        isPhotoSaved = false;
+        applyLockState();
+        if (rawPhotoDataUrl) {
+            updatePhotoPreviewUI(rawPhotoDataUrl, "Mode edit aktif — pilih ulang foto lalu tekan Simpan");
+        }
+        showPopup("Mode Edit Aktif", "Kunci kartu Bukti Foto Pembayaran telah dibuka. Silakan ganti foto lalu tekan Simpan kembali.");
+    }
+
+    function deletePhotoCard() {
+        isPhotoSaved = false;
+        rawPhotoDataUrl = "";
+        watermarkedPhotoDataUrl = "";
+        currentPhotoFileName = "";
+        document.getElementById("photo-camera-input").value = "";
+        document.getElementById("photo-gallery-input").value = "";
+        updatePhotoPreviewUI("", "");
+        applyLockState();
+        showPopup("Terhapus", "Bukti foto pembayaran telah dihapus.");
+    }
+
+    function updateDetailBanner() {
+        const total = getGrandTotalValue();
+        if (total <= 0) {
+            const item = denominations[selectedIndex];
+            document.getElementById("active-denom-label").textContent =
+                `0 x ${item.label} = 0`;
+        } else {
+            document.getElementById("active-denom-label").textContent =
+                formatRupiah(total);
+        }
+    }
+
+    function handleRowClick(index) {
+        if (isCalcSaved) return;
+        selectedIndex = index;
+        openDrawerIndex = (openDrawerIndex === index) ? null : index;
+        syncRowStates();
+    }
+
+    function setActiveRow(index) {
+        if (isCalcSaved) return;
+        selectedIndex = index;
+        syncRowStates();
+    }
+
+    function syncRowStates() {
+        document.querySelectorAll(".calc-row").forEach((el, idx) => {
+            el.classList.toggle("selected", idx === selectedIndex);
+            el.classList.toggle("open", idx === openDrawerIndex);
+        });
+    }
+
+    function toggleBreakdown() {
+        document.getElementById("breakdown-card").classList.toggle("open");
+    }
+
+    function renderBreakdown() {
+        const body = document.getElementById("breakdown-body");
+        const activeItems = denominations.filter(item => item.count > 0);
+
+        if (activeItems.length === 0) {
+            body.innerHTML = `<div class="empty-note">Belum ada nominal yang dipilih</div>`;
+            return;
+        }
+
+        const rowsHTML = activeItems.map((item, idx) => {
+            const sub = item.value * item.count;
+            return `
+                <tr>
+                    <td class="excel-no">${idx + 1}.</td>
+                    <td class="excel-nominal">${item.label}</td>
+                    <td class="excel-sign">x</td>
+                    <td class="excel-qty">${item.count}</td>
+                    <td class="excel-eq">=</td>
+                    <td class="excel-sub">${formatAngka(sub)}</td>
+                </tr>
+            `;
+        }).join("");
+
+        body.innerHTML = `<table class="excel-table">${rowsHTML}</table>`;
+    }
+
+    function renderCalculator() {
+        const container = document.getElementById("denom-list");
+        container.innerHTML = "";
+
+        denominations.forEach((item, index) => {
+            const subtotal = item.value * item.count;
+            const row = document.createElement("div");
+            row.className = `calc-row ${index === selectedIndex ? 'selected' : ''} ${index === openDrawerIndex ? 'open' : ''}`;
+            row.onclick = (e) => {
+                if (!e.target.closest("button") && !e.target.closest("input")) {
+                    handleRowClick(index);
+                }
+            };
+
+            const quickButtonsHTML = quickSteps.map(step =>
+                `<button type="button" class="btn-quick" onclick="updateCount(${index}, ${step})">+${step}</button>`
+            ).join("");
+
+            row.innerHTML = `
+                <div class="row-main">
+                    <div class="denom-wrap">
+                        <span class="denom-rp">Rp</span>
+                        <span class="denom-val">${item.label}</span>
+                    </div>
+                    <div class="step-control">
+                        <button type="button" class="btn-step" onclick="updateCount(${index}, -1)">−</button>
+                        <input type="number" class="qty-input" id="qty-${index}" value="${item.count}" min="0"
+                            onfocus="setActiveRow(${index}); this.select();"
+                            onchange="setDirectCount(${index}, this.value)">
+                        <button type="button" class="btn-step" onclick="updateCount(${index}, 1)">+</button>
+                    </div>
+                    <div class="subtotal-col ${subtotal === 0 ? 'zero' : ''}" id="sub-${index}">
+                        ${formatRupiah(subtotal)}
+                    </div>
+                </div>
+                <div class="row-quick-drawer">
+                    ${quickButtonsHTML}
+                </div>
+            `;
+            container.appendChild(row);
+        });
+
+        calculateTotals();
+    }
+
+    function updateCount(index, delta) {
+        if (isCalcSaved) return;
+        setActiveRow(index);
+        denominations[index].count = Math.max(0, denominations[index].count + delta);
+        refreshRow(index);
+    }
+
+    function setDirectCount(index, val) {
+        if (isCalcSaved) return;
+        const parsed = parseInt(val, 10);
+        denominations[index].count = isNaN(parsed) || parsed < 0 ? 0 : parsed;
+        refreshRow(index);
+    }
+
+    function refreshRow(index) {
+        const count = denominations[index].count;
+        const subtotal = denominations[index].value * count;
+
+        document.getElementById(`qty-${index}`).value = count;
+        const subEl = document.getElementById(`sub-${index}`);
+        subEl.textContent = formatRupiah(subtotal);
+        subEl.className = `subtotal-col ${subtotal === 0 ? 'zero' : ''}`;
+
+        calculateTotals();
+    }
+
+    function getGrandTotalValue() {
+        return denominations.reduce((sum, item) => sum + (item.value * item.count), 0);
+    }
+
+    function calculateTotals() {
+        updateDetailBanner();
+        updateSummaryDock();
+        renderBreakdown();
+    }
+
+    function resetCalc() {
+        isDeliverySaved = false;
+        isCalcSaved = false;
+        isPhotoSaved = false;
+        localStorage.removeItem("lpg3kg_delivery_info");
+        localStorage.removeItem("lpg3kg_calc_counts");
+
+        denominations.forEach(item => item.count = 0);
+        openDrawerIndex = null;
+
+        rawPhotoDataUrl = "";
+        watermarkedPhotoDataUrl = "";
+        currentPhotoFileName = "";
+        document.getElementById("photo-camera-input").value = "";
+        document.getElementById("photo-gallery-input").value = "";
+        updatePhotoPreviewUI("", "");
+
+        document.getElementById("tanggal-picker").value = "";
+        handleDateChange("");
+        clearPangkalan();
+        document.getElementById("jumlah-tabung-input").value = "";
+        clearHarga();
+        clearStatus();
+        clearCatatan();
+        calculateBayar();
+
+        renderCalculator();
+        applyLockState();
+        showNotice();
+    }
+
+    function validateBeforeAction(requireSavedPhoto) {
+        if (!isDeliverySaved || !isCalcSaved) {
+            let belumSimpan = [];
+            if (!isDeliverySaved) belumSimpan.push("Informasi Pengiriman");
+            if (!isCalcSaved) belumSimpan.push("Informasi Pembayaran dan Kalkulator Cepat");
+
+            showPopup(
+                "Belum Tersimpan",
+                `Simpan terlebih dahulu data pada kartu: ${belumSimpan.join(" dan ")} agar tombol dapat digunakan.`,
+                true
+            );
+            return false;
+        }
+
+        if (requireSavedPhoto && (!isPhotoSaved || !watermarkedPhotoDataUrl)) {
+            showPopup(
+                "Bukti Foto Belum Tersimpan",
+                "Pilih foto dan tekan tombol Simpan pada kartu Bukti Foto Pembayaran terlebih dahulu sebelum menekan Jadikan JPG.",
+                true
+            );
+            return false;
+        }
+
+        const jumlahBayar = getJumlahBayarValue();
+        const totalPembayaran = getGrandTotalValue();
+
+        if (totalPembayaran < jumlahBayar) {
+            showPopup(
+                "Pembayaran Kurang",
+                `Uang diterima (${formatRupiah(totalPembayaran)}) masih di bawah nilai Jumlah bayar (${formatRupiah(jumlahBayar)}).`,
+                true
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+    function handleExportAction(type) {
+        if (type === "jpg") {
+            if (!validateBeforeAction(true)) return;
+            saveAsJPG();
+        } else if (type === "wa") {
+            if (!validateBeforeAction(false)) return;
+            sendToWhatsApp();
+        }
+    }
+
+    function sendToWhatsApp() {
+        const tglText = document.getElementById("tanggal-text").textContent;
+        const pangkalan = document.getElementById("pangkalan-input").value.trim();
+        const tabung = parseAngka(document.getElementById("jumlah-tabung-input").value);
+        const harga = parseAngka(document.getElementById("harga-satuan-input").value);
+        const bayar = tabung * harga;
+        const statusBayar = document.getElementById("status-bayar-input").value.trim();
+        const catatan = document.getElementById("catatan-input").value.trim();
+        const grandTotal = getGrandTotalValue();
+        const kembalian = grandTotal - bayar;
+
+        let text = "*INFORMASI PENGIRIMAN DAN PEMBAYARAN - LPG 3 KG*\n";
+        text += `${getHeaderDateIndo()}\n\n`;
+        text += "*INFORMASI PENGIRIMAN*\n";
+        text += `Tanggal kirim : ${tglText}\n`;
+        text += `Pangkalan : ${pangkalan}\n`;
+        text += `Jumlah tabung : ${tabung}\n`;
+        text += `Harga satuan : ${formatAngka(harga)}\n`;
+        text += `Jumlah bayar : ${formatRupiah(bayar)}\n`;
+        text += `Status bayar : ${statusBayar}\n`;
+        if (catatan) {
+            text += `Catatan : ${catatan}\n`;
+        }
+
+        text += "\n*INFORMASI PEMBAYARAN*\n";
+        let hasItems = false;
+        let no = 1;
+
+        denominations.forEach(item => {
+            const sub = item.value * item.count;
+            if (item.count > 0) {
+                hasItems = true;
+                text += `${no}) Rp ${item.label} x ${item.count} = ${formatAngka(sub)}\n`;
+                no++;
+            }
+        });
+
+        if (!hasItems) {
+            text += "Belum ada nominal yang dipilih.\n";
+        }
+
+        text += `\nUang diterima: ${formatRupiah(grandTotal)}\n`;
+        text += `Jumlah bayar: ${formatRupiah(bayar)}\n`;
+        text += `Total kembalian: ${formatRupiah(Math.max(0, kembalian))}\n\n`;
+        text += "Terima Kasih";
+
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+    }
+
+    function saveAsJPG() {
+        const tglText = document.getElementById("tanggal-text").textContent;
+        const pangkalan = document.getElementById("pangkalan-input").value.trim();
+        const tabung = parseAngka(document.getElementById("jumlah-tabung-input").value);
+        const harga = parseAngka(document.getElementById("harga-satuan-input").value);
+        const bayar = tabung * harga;
+        const statusBayar = document.getElementById("status-bayar-input").value.trim();
+        const catatan = document.getElementById("catatan-input").value.trim();
+        const grandTotal = getGrandTotalValue();
+        const kembalian = Math.max(0, grandTotal - bayar);
+
+        const activeItems = denominations.filter(item => item.count > 0);
+        const paymentRowsHTML = activeItems.map((item, idx) => {
+            const sub = item.value * item.count;
+            return `
+                <div class="receipt-pay-item">
+                    <span class="receipt-pay-left">${idx + 1}. ${item.count} lembar &times; Rp ${item.label}</span>
+                    <span class="receipt-pay-right">${formatRupiah(sub)}</span>
+                </div>
+            `;
+        }).join("");
+
+        const photoFileName = currentPhotoFileName || buildPhotoFileName();
+
+        const photoSectionHTML = `
+            <div class="receipt-photo-section">
+                <div class="receipt-box-title">Bukti Foto Pembayaran</div>
+                <div class="receipt-photo-inner-wrap">
+                    <div class="receipt-photo-frame">
+                        <img src="${watermarkedPhotoDataUrl}" alt="Bukti Foto Pembayaran">
+                        <div class="receipt-photo-caption">${photoFileName}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const sandbox = document.getElementById("receipt-sandbox");
+        sandbox.innerHTML = `
+            <div class="receipt-outer-frame">
+                <div class="receipt-header">
+                    <h2>LPG 3 KG</h2>
+                    <div class="receipt-subtitle">Informasi pengiriman dan informasi pembayaran</div>
+                    <div class="receipt-date">${getFullDayDateIndo()}</div>
+                </div>
+
+                <div class="receipt-box">
+                    <div class="receipt-box-title">Informasi pengiriman</div>
+                    <table class="receipt-info-table">
+                        <tr>
+                            <td class="r-label">Tanggal kirim</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val">${tglText}</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Pangkalan</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val">${pangkalan}</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Jumlah tabung</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val">${tabung} tabung</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Harga satuan</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val">${formatRupiah(harga)}</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Jumlah bayar</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val bold">${formatRupiah(bayar)}</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Status bayar</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val bold">${statusBayar}</td>
+                        </tr>
+                        <tr>
+                            <td class="r-label">Catatan</td>
+                            <td class="r-colon">:</td>
+                            <td class="r-val">${catatan}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="receipt-box">
+                    <div class="receipt-box-title">Informasi pembayaran</div>
+                    ${paymentRowsHTML}
+                </div>
+
+                <div class="receipt-summary-box">
+                    <div class="receipt-sum-row">
+                        <span>Uang diterima</span>
+                        <span>${formatRupiah(grandTotal)}</span>
+                    </div>
+                    <div class="receipt-sum-row">
+                        <span>Jumlah bayar</span>
+                        <span>${formatRupiah(bayar)}</span>
+                    </div>
+                    <div class="receipt-sum-row ${kembalian > 0 ? 'positive' : ''}">
+                        <span>Total kembalian</span>
+                        <span>${formatRupiah(kembalian)}</span>
+                    </div>
+                </div>
+
+                <div class="receipt-thank-you">Terima Kasih</div>
+                ${photoSectionHTML}
+            </div>
+        `;
+
+        html2canvas(sandbox, {
+            backgroundColor: "#f6f4ef",
+            scale: 2,
+            useCORS: true
+        }).then(canvas => {
+            const link = document.createElement("a");
+            link.download = photoFileName;
+            link.href = canvas.toDataURL("image/jpeg", 0.92);
+            link.click();
+            sandbox.innerHTML = "";
+        }).catch(() => {
+            sandbox.innerHTML = "";
+        });
+    }
+
+    setHeaderDate();
+    showNotice();
+    renderPangkalanChips();
+    renderCalculator();
+    applyLockState();
+</script>
+
+</body>
+</html>
