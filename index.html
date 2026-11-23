@@ -2187,9 +2187,9 @@
             text += `Catatan : ${catatan}\n`;
         }
 
-        text += `\nUang diterima: ${formatRupiah(grandTotal)}\n`;
-        text += `Jumlah bayar: ${formatRupiah(bayar)}\n`;
-        text += `Total kembalian: ${formatRupiah(Math.max(0, kembalian))}\n\n`;
+        text += `\nUang diterima : ${formatRupiah(grandTotal)}\n`;
+        text += `Jumlah bayar : ${formatRupiah(bayar)}\n`;
+        text += `Total kembalian : ${formatRupiah(Math.max(0, kembalian))}\n\n`;
         text += "Terima Kasih";
 
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
