@@ -2176,7 +2176,7 @@
 
         let text = "*INFORMASI PENGIRIMAN DAN PEMBAYARAN - LPG 3 KG*\n";
         text += `${getHeaderDateIndo()}\n\n`;
-        text += "*INFORMASI PENGIRIMAN*\n";
+        text += "*PENGIRIMAN DAN PEMBAYARAN*\n";
         text += `Tanggal kirim : ${tglText}\n`;
         text += `Pangkalan : ${pangkalan}\n`;
         text += `Jumlah tabung : ${tabung}\n`;
@@ -2185,23 +2185,6 @@
         text += `Status bayar : ${statusBayar}\n`;
         if (catatan) {
             text += `Catatan : ${catatan}\n`;
-        }
-
-        text += "\n*INFORMASI PEMBAYARAN*\n";
-        let hasItems = false;
-        let no = 1;
-
-        denominations.forEach(item => {
-            const sub = item.value * item.count;
-            if (item.count > 0) {
-                hasItems = true;
-                text += `${no}) Rp ${item.label} x ${item.count} = ${formatAngka(sub)}\n`;
-                no++;
-            }
-        });
-
-        if (!hasItems) {
-            text += "Belum ada nominal yang dipilih.\n";
         }
 
         text += `\nUang diterima: ${formatRupiah(grandTotal)}\n`;
