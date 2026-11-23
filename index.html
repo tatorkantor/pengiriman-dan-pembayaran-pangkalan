@@ -375,6 +375,11 @@
             cursor: not-allowed;
         }
 
+        .form-input.auto-empty-hint {
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
         .btn-clear-inside {
             display: none;
             position: absolute;
@@ -1120,7 +1125,7 @@
                             <label class="form-label" for="pangkalan-input">Pangkalan</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="text" id="pangkalan-input" class="form-input" placeholder="Masukkan nama pangkalan" oninput="handlePangkalanInput()">
+                                <input type="text" id="pangkalan-input" class="form-input" placeholder="Pilih atau isi manual nama pangkalan" oninput="handlePangkalanInput()">
                                 <button type="button" class="btn-clear-inside" id="clear-pangkalan" onclick="clearPangkalan()" title="Batalkan">×</button>
                             </div>
                         </div>
@@ -1132,7 +1137,7 @@
                             <label class="form-label" for="jumlah-tabung-input">Jumlah tabung</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="number" id="jumlah-tabung-input" class="form-input no-clear" placeholder="0" min="0" oninput="calculateBayar()">
+                                <input type="number" id="jumlah-tabung-input" class="form-input no-clear" placeholder="Isi manual jumlah tabung" min="0" oninput="calculateBayar()">
                             </div>
                         </div>
                     </div>
@@ -1142,7 +1147,7 @@
                             <label class="form-label" for="harga-satuan-input">Harga satuan</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="text" id="harga-satuan-input" class="form-input" placeholder="0" inputmode="numeric" oninput="handleHargaInput(this.value)">
+                                <input type="text" id="harga-satuan-input" class="form-input" placeholder="Pilih atau isi manual harga satuan" inputmode="numeric" oninput="handleHargaInput(this.value)">
                                 <button type="button" class="btn-clear-inside" id="clear-harga" onclick="clearHarga()" title="Batalkan">×</button>
                             </div>
                         </div>
@@ -1156,7 +1161,7 @@
                             <label class="form-label" for="jumlah-bayar-input">Jumlah bayar</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="text" id="jumlah-bayar-input" class="form-input no-clear locked-input" value="Rp 0" readonly tabindex="-1">
+                                <input type="text" id="jumlah-bayar-input" class="form-input no-clear locked-input auto-empty-hint" value="Rp 0 otomatis terisi" readonly tabindex="-1">
                             </div>
                         </div>
                     </div>
@@ -1166,7 +1171,7 @@
                             <label class="form-label" for="status-bayar-input">Status bayar</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="text" id="status-bayar-input" class="form-input" placeholder="Pilih atau isi status bayar" oninput="handleStatusInput()">
+                                <input type="text" id="status-bayar-input" class="form-input" placeholder="Pilih atau isi manual status bayar" oninput="handleStatusInput()">
                                 <button type="button" class="btn-clear-inside" id="clear-status" onclick="clearStatus()" title="Batalkan">×</button>
                             </div>
                         </div>
@@ -1180,12 +1185,13 @@
                             <label class="form-label" for="catatan-input">Catatan</label>
                             <span class="form-colon">:</span>
                             <div class="input-box-wrap">
-                                <input type="text" id="catatan-input" class="form-input" placeholder="Pilih atau isi catatan" oninput="handleCatatanInput()">
+                                <input type="text" id="catatan-input" class="form-input" placeholder="Pilih atau isi manual catatan" oninput="handleCatatanInput()">
                                 <button type="button" class="btn-clear-inside" id="clear-catatan" onclick="clearCatatan()" title="Batalkan">×</button>
                             </div>
                         </div>
                         <div class="chip-container" id="catatan-chips">
-                            <button type="button" class="chip-btn" onclick="selectCatatan('TIDAK ADA')">TIDAK ADA</button>
+                            <button type="button" class="chip-btn" onclick="selectCatatan('TUNAI')">TUNAI</button>
+                            <button type="button" class="chip-btn" onclick="selectCatatan('TRANSFER')">TRANSFER</button>
                         </div>
                     </div>
                 </div>
@@ -1592,7 +1598,14 @@
 
     function calculateBayar() {
         const bayar = getJumlahBayarValue();
-        document.getElementById("jumlah-bayar-input").value = formatRupiah(bayar);
+        const bayarInput = document.getElementById("jumlah-bayar-input");
+        if (bayar <= 0) {
+            bayarInput.value = "Rp 0 otomatis terisi";
+            bayarInput.classList.add("auto-empty-hint");
+        } else {
+            bayarInput.value = formatRupiah(bayar);
+            bayarInput.classList.remove("auto-empty-hint");
+        }
         updateSummaryDock();
     }
 
