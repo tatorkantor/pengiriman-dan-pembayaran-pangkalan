@@ -1451,6 +1451,12 @@
         document.getElementById(`icon-eye-closed-${suffix}`).style.display = isOpen ? "none" : "block";
     }
 
+    function closeAllCards() {
+        setCardOpenState("delivery-info-wrapper", "info", false);
+        setCardOpenState("quick-calc-wrapper", "calc", false);
+        setCardOpenState("photo-proof-wrapper", "photo", false);
+    }
+
     function toggleCard(wrapperId, suffix) {
         const wrapper = document.getElementById(wrapperId);
         const willOpen = !wrapper.classList.contains("open");
@@ -2112,6 +2118,7 @@
 
         renderCalculator();
         applyLockState();
+        closeAllCards();
         showNotice();
     }
 
